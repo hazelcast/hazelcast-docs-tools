@@ -1,0 +1,43 @@
+{
+  "name": "hazelcast-docs-tools",
+  "version": "1.0.0",
+  "description": "Various tools and helpers to build documentation site",
+  "main": "index.js",
+  "engines" : {
+    "npm" : ">=10.0.0",
+    "node" : ">=20.0.0"
+  },
+  "directories": {
+    "scripts": "scripts",
+    "antora-extensions": "antora-extensions",
+    "antora-macro": "antora-macro"
+  },
+  "files": [
+    "scripts",
+    "antora-extensions",
+    "antora-macro"
+  ],
+  "bin": {
+    "check-orphan-pages": "bin/check-orphan-pages.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hazelcast/hazelcast-docs-tools.git"
+  },
+  "keywords": [
+    "antora",
+    "hazelcast",
+    "utility",
+    "extension",
+    "macros"
+  ],
+  "author": "Mykola Fant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hazelcast/hazelcast-docs-tools/issues"
+  },
+  "homepage": "https://github.com/hazelcast/hazelcast-docs-tools#readme"
+}
