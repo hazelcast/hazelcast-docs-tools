@@ -59,6 +59,7 @@ The release process is powered by [`npm` CLI](https://docs.npmjs.com/updating-yo
 
 1. Switch to the `main` branch, fetch, commit and push the latest changes.
 2. Run in the console `npm version [patch|minor|major]`. Note the version output in the console after you run the latter command - it will be the new version.
-3. Go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with the latest tag (appeared after step 2). Don't forget to check "Set as the latest release".
+3. Run `git push --tags`. 
+4. Go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with the latest tag (appeared after step 2). Don't forget to check "Set as the latest release".
 
 To use that release clients need to reinstall the package with the new version, e.g. for the version `v1.2.3` run `npm i -D hazelcast/hazelcast-docs-tools#v1.2.3`
