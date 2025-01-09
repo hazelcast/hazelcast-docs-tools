@@ -1,11 +1,11 @@
 {
   "name": "hazelcast-docs-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Various tools and helpers to build documentation site",
   "main": "index.js",
-  "engines" : {
-    "npm" : ">=10.0.0",
-    "node" : ">=20.0.0"
+  "engines": {
+    "npm": ">=10.0.0",
+    "node": ">=20.0.0"
   },
   "directories": {
     "scripts": "scripts",
