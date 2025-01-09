@@ -107,8 +107,9 @@ function main() {
 	if (orphanPages.length === 0) {
 		console.log('No orphan pages detected. YAY!');
 	} else {
-		console.warn('The following orphan pages were detected:');
-		console.warn(orphanPages);
+		console.error('The following orphan pages were detected:');
+		console.error(orphanPages);
+		process.exit(1);
 	}
 }
 
