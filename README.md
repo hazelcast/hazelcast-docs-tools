@@ -57,10 +57,10 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 ### Orphan Checker
 The `check-orphan-pages` command takes the following arguments
 
-| Name                  | Description                                                             | Default Value |
-|-----------------------|-------------------------------------------------------------------------|---------------|
-| `--directory`, `-d`   | set the root folder of documentation                                    | `"docs"`      |
-| `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected | `undefined`   |
+| Name                  | Description                                                                                                                           | Default Value |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| `--directory`, `-d`   | set the root folder of documentation, if there are several root directories, can take a coma separated list, e.g. `-d docs,tutorials` | `"docs"`      |
+| `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected                                                               | `undefined`   |
 
 ### Check Links Playbook Loader
 The `load-check-links-playbook` command takes the following arguments
