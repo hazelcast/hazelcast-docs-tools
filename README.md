@@ -45,10 +45,16 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 ```
 
 ## Tools
-| File                           | Type              | Description                                                                                                                                                                                                                     | 
-|--------------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `load-check-links-playbook.js` | script            | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation                                   |
-| `orphan-pages-checker.js`      | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation. Takes one optional parameter `--directory` or '-d` to set the root folder of documentation, default value `docs` |
-| `tabs-block.js`                | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                                                                 |
-| `swagger-ui-block-macro.js`    | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                                                           |
-| `api-json.js`                  | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                                                   |
+| File                                | Type              | Description                                                                                                                                                                                                                     | 
+|-------------------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `load-check-links-playbook.js`      | script            | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation                                   |
+| `orphan-pages-checker.js`           | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation. Takes one optional parameter `--directory` or '-d` to set the root folder of documentation, default value `docs` |
+| `tabs-block.js`                     | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                                                                 |
+| `swagger-ui-block-macro.js`         | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                                                           |
+| `api-json.js`                       | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                                                   |
+| `antora-link-checker-extension.js`  | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                                                    |
+
+## Release Process
+To release a new version of the `hazelcast-docs-tools` go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with a new tag.
+
+To use that release clients need to reinstall the package with the new version, e.g. for the version `v1.2.3` run `npm i -D hazelcast/hazelcast-docs-tools#v1.2.3`
