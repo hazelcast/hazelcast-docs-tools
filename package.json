@@ -18,7 +18,8 @@
     "antora-macro"
   ],
   "bin": {
-    "check-orphan-pages": "bin/check-orphan-pages.js"
+    "check-orphan-pages": "bin/check-orphan-pages.js",
+    "load-check-links-playbook": "bin/load-check-links-playbook.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

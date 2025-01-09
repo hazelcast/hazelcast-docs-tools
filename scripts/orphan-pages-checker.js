@@ -8,6 +8,7 @@ const {
 		directory: {
 			type: 'string',
 			short: 'd',
+			default: 'docs',
 		},
 		'log-failure-level': {
 			type: 'string',
@@ -15,7 +16,8 @@ const {
 	},
 });
 
-const ROOT_DIRECTORY = argValues.directory || 'docs';
+const ROOT_DIRECTORY = argValues.directory;
+const LOG_FAILURE_LEVEL = argValues['log-failure-level'];
 
 class NavLinksCollector {
 	static FILE_LINK_REGEXP = /xref:([\w,\s-]+:)?([\w,\s-]+.adoc)/;
@@ -112,7 +114,7 @@ function main() {
 	} else {
 		console.error('The following orphan pages were detected:');
 		console.error(orphanPages);
-		if (argValues['log-failure-level'] === 'error') {
+		if (LOG_FAILURE_LEVEL === 'error') {
 			process.exit(1);
 		}
 	}

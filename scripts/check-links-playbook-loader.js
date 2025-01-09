@@ -1,6 +1,7 @@
 const YAML = require('yaml');
 const fs = require('fs');
 const { isMatch } = require('matcher');
+const {parseArgs} = require('node:util');
 
 function main() {
 	const { currentRepoName, baseBranchName } = parseInputArgs();
@@ -30,19 +31,43 @@ function main() {
 }
 
 function parseInputArgs() {
-	const [currentRepoName, baseBranchName] = process.argv.slice(-2);
+	const {
+		values: argValues,
+	} = parseArgs({ options: {
+			repo: {
+				type: 'string',
+				short: 'r',
+			},
+			branch: {
+				type: 'string',
+				short: 'b',
+			},
+			'log-level': {
+				type: 'string',
+				default: 'log', // 'log' | 'debug'
+			},
+		},
+	});
+
+	const currentRepoName = argValues.repo;
+	const baseBranchName = argValues.branch;
+	const logLevel = argValues['log-level'];
+
+	if (logLevel !== 'debug') {
+		global.console.debug = () => null;
+	}
+
+	// check whether there are arguments after the filename
+	if (!currentRepoName || !baseBranchName) {
+		throw new Error('`repo` and `branch` must be specified!');
+	}
 
 	console.log('Checking links...');
 
-	// check whether there are arguments after the filename
-	if (currentRepoName.includes('load-check-links-playbook') || baseBranchName.includes('load-check-links-playbook')) {
-		throw new Error('GitHub repository name and base branch should be passed as arguments');
-	}
+	console.debug('Repository name: ', currentRepoName);
+	console.debug('Base branch: ', baseBranchName);
 
-	console.log('Repository name: ', currentRepoName);
-	console.log('Base branch: ', baseBranchName);
-
-	return { currentRepoName, baseBranchName };
+	return { currentRepoName, baseBranchName, logLevel };
 }
 
 function loadLocalAntoraPlaybook() {
