@@ -45,14 +45,22 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 ```
 
 ## Tools
-| File                                | Type              | Description                                                                                                                                                                                                                     | 
-|-------------------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `load-check-links-playbook.js`      | script            | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation                                   |
-| `orphan-pages-checker.js`           | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation. Takes one optional parameter `--directory` or '-d` to set the root folder of documentation, default value `docs` |
-| `tabs-block.js`                     | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                                                                 |
-| `swagger-ui-block-macro.js`         | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                                                           |
-| `api-json.js`                       | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                                                   |
-| `antora-link-checker-extension.js`  | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                                                    |
+| File                                | Type              | Description                                                                                                                                                                                   | 
+|-------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `load-check-links-playbook.js`      | script            | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation |
+| `orphan-pages-checker.js`           | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation.                                                                                |
+| `tabs-block.js`                     | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                               |
+| `swagger-ui-block-macro.js`         | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                         |
+| `api-json.js`                       | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                 |
+| `antora-link-checker-extension.js`  | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                  |
+
+### Orphan Checker
+The `check-orphan-pages` command takes the following arguments
+
+| Name                  | Description                                                             | Default Value |
+|-----------------------|-------------------------------------------------------------------------|---------------|
+| `--directory`, `-d`   | set the root folder of documentation                                    | `"docs"`      |
+| `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected | `undefined`   |
 
 ## Release Process
 The release process is powered by [`npm` CLI](https://docs.npmjs.com/updating-your-published-package-version-number).

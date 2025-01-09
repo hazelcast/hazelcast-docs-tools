@@ -3,16 +3,19 @@ const path = require('path');
 const { parseArgs } = require('node:util');
 
 const {
-	values,
+	values: argValues,
 } = parseArgs({ options: {
 		directory: {
 			type: 'string',
 			short: 'd',
 		},
+		'log-failure-level': {
+			type: 'string',
+		},
 	},
 });
 
-const ROOT_DIRECTORY = values.directory || 'docs';
+const ROOT_DIRECTORY = argValues.directory || 'docs';
 
 class NavLinksCollector {
 	static FILE_LINK_REGEXP = /xref:([\w,\s-]+:)?([\w,\s-]+.adoc)/;
@@ -109,7 +112,9 @@ function main() {
 	} else {
 		console.error('The following orphan pages were detected:');
 		console.error(orphanPages);
-		process.exit(1);
+		if (argValues['log-failure-level'] === 'error') {
+			process.exit(1);
+		}
 	}
 }
 
