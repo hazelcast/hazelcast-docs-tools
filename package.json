@@ -18,14 +18,14 @@
     "antora-macro"
   ],
   "bin": {
-    "@hazelcast-docs-tools/check-orphan-pages": "bin/check-orphan-pages.js"
+    "check-orphan-pages": "bin/check-orphan-pages.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hazelcast/hazelcast-docs-tools"
+    "url": "git+https://github.com/hazelcast/hazelcast-docs-tools"
   },
   "keywords": [
     "antora",
