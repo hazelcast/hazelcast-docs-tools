@@ -55,6 +55,6 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 | `antora-link-checker-extension.js`  | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                                                    |
 
 ## Release Process
-To release a new version of the `hazelcast-docs-tools` go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with a new tag.
+To release a new version of the `hazelcast-docs-tools` go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with a new tag from the `main` branch.
 
 To use that release clients need to reinstall the package with the new version, e.g. for the version `v1.2.3` run `npm i -D hazelcast/hazelcast-docs-tools#v1.2.3`
