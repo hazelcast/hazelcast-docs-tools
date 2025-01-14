@@ -38,10 +38,37 @@ require('hazelcast-docs-tools/scripts/orphan-pages-checker');
 ```
 
 ### Executables
-Executables are installed inside the `node_modules/.bin`, so they can be called directly e.g. in npm scripts:
+Executables are installed inside the `node_modules/.bin`, so they can be called directly from the command line. E.g.:
+
+```shell
+./node_modules/.bin/check-orphan-pages
+```
+You can also pass the command line arguments
+
+```shell
+./node_modules/.bin/check-orphan-pages -d tutorials --log-failure-level error
+```
+
+Or they can be called as `npm` scripts. For that to work you need to add the `check-orphan-pages` command to the `scripts` section of the `package.json`:
 
 ```json
-"check-orphan-pages": "check-orphan-pages",
+{
+  "scripts": {
+    "check-orphan-pages": "check-orphan-pages"
+  }
+}
+```
+
+Then you can launch the check as following:
+
+```shell
+npm run check-orphan-pages
+```
+
+Or you can also pass arguments to the command of the `npm` script using `--` before the arguments list:
+
+```shell
+npm run check-orphan-pages -- --log-failure-level error
 ```
 
 ## Tools
@@ -59,8 +86,8 @@ The `check-orphan-pages` command takes the following arguments
 
 | Name                  | Description                                                                                                                           | Default Value |
 |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| `--directory`, `-d`   | set the root folder of documentation, if there are several root directories, can take a coma separated list, e.g. `-d docs,tutorials` | `"docs"`      |
-| `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected                                                               | `undefined`   |
+| `--directory`, `-d`   | set the root folder of documentation, if there are several root directories, can take a coma separated list, e.g. `-d docs,tutorials` | `docs`        |
+| `--log-failure-level` | if set to `error` exits process with `1` if orphan pages are detected                                                                 | `undefined`   |
 
 ### Check Links Playbook Loader
 The `load-check-links-playbook` command takes the following arguments
