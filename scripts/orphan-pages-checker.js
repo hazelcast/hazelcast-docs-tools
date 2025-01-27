@@ -20,7 +20,7 @@ const ROOT_DIRECTORIES = argValues.directory.split(',');
 const LOG_FAILURE_LEVEL = argValues['log-failure-level'];
 
 class NavLinksCollector {
-	static FILE_LINK_REGEXP = /xref:([\w,\s-]+:)?([\w,\s-]+.adoc)/;
+	static FILE_LINK_REGEXP = /xref:([\w,\s-]+:)?([.\w,\s-]+.adoc)/;
 	static CHILD_NAV_REGEXP = /include::([\w,\s-]+):partial\$nav.adoc/;
 
 	// @TODO: use hashmap or dictionary to optimize
