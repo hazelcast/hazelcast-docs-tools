@@ -1,3 +1,5 @@
+// obsolete, should be removed after we migrate everything to global-playbook-loader.js
+
 const YAML = require('yaml');
 const fs = require('fs');
 const { isMatch } = require('matcher');
@@ -75,6 +77,9 @@ function loadLocalAntoraPlaybook() {
 	return YAML.parse(localAntoraPlaybookContent);
 }
 
+// 		- remove hazelcast-mono & management-center,
+//   		because they have only Swagger docs thus will never have links to the current
+// 	  	and also they require authentication
 function removeProtectedSources(sources) {
 	return sources.filter(source =>
 		!(source.url === 'https://github.com/hazelcast/hazelcast-mono')
@@ -84,10 +89,6 @@ function removeProtectedSources(sources) {
 function loadGlobalAntoraData() {
 	const globalAntoraPlaybookContent = fs.readFileSync('./hazelcast-docs/antora-playbook.yml', 'utf8');
 	const globalAntoraPlaybook = YAML.parse(globalAntoraPlaybookContent);
-
-	// 		- remove hazelcast-mono & management-center,
-	//   		because they have only Swagger docs thus will never have links to the current
-	// 	  	and also they require authentication
 	const globalSources = removeProtectedSources(globalAntoraPlaybook.content.sources);
 	const globalAsciidocAttributes = globalAntoraPlaybook.asciidoc.attributes;
 
