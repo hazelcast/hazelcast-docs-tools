@@ -1,5 +1,7 @@
 // obsolete, should be removed after we migrate everything to global-playbook-loader.js
 
+console.log('This script is obsolete. Please migrate to load-global-playbook');
+
 const YAML = require('yaml');
 const fs = require('fs');
 const { isMatch } = require('matcher');
