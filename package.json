@@ -19,7 +19,8 @@
   ],
   "bin": {
     "check-orphan-pages": "bin/check-orphan-pages.js",
-    "load-check-links-playbook": "bin/load-check-links-playbook.js"
+    "load-check-links-playbook": "bin/load-check-links-playbook.js",
+    "load-global-playbook": "bin/load-global-playbook.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
