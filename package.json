@@ -40,5 +40,9 @@
   "bugs": {
     "url": "https://github.com/hazelcast/hazelcast-docs-tools/issues"
   },
-  "homepage": "https://github.com/hazelcast/hazelcast-docs-tools#readme"
+  "homepage": "https://github.com/hazelcast/hazelcast-docs-tools#readme",
+  "dependencies": {
+    "matcher": "^3.0.0",
+    "yaml": "^2.6.0"
+  }
 }
