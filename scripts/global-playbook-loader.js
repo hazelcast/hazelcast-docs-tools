@@ -15,9 +15,10 @@ class PlaybookLoader {
 	static async getGitData(argValues) {
 		let currentRepoName = argValues.repo;
 		let baseBranchName = argValues.branch;
-		if (process.env.NETLIFY) {
+		if (process.env.NETLIFY === 'true') {
 			currentRepoName = process.env.REPOSITORY_URL?.replace('https://github.com/', '');
-			baseBranchName = process.env.PULL_REQUEST ? await PlaybookLoader.getBranchNameFromPrId(currentRepoName) : process.env.BRANCH;
+			// for production build process.env.BRANCH === "branch_name", for a preview build process.env.BRANCH === "pull/{PR_ID}/head"
+			baseBranchName = process.env.PULL_REQUEST === 'true' ? await PlaybookLoader.getBranchNameFromPrId(currentRepoName) : process.env.BRANCH;
 		}
 
 		// check whether there are arguments after the filename
@@ -208,7 +209,7 @@ class PlaybookLoader {
 			},
 		});
 
-		const { currentRepoName, baseBranchName } = PlaybookLoader.getGitData(argValues);
+		const { currentRepoName, baseBranchName } = await PlaybookLoader.getGitData(argValues);
 		const logLevel = argValues['log-level'];
 		const skipPrivateRepos = argValues['skip-private-repos'];
 		const enforceGlobalSources = argValues['enforce-global-sources'];
