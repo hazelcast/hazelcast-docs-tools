@@ -3,6 +3,7 @@ const { isMatch } = require('matcher');
 const fs = require('fs');
 const {parseArgs} = require('node:util');
 
+
 class PlaybookLoader {
 	static async fetchGlobalAntoraPlaybook() {
 		const response = await fetch('https://api.github.com/repos/hazelcast/hazelcast-docs/contents/antora-playbook.yml');
@@ -11,12 +12,32 @@ class PlaybookLoader {
 		return YAML.parse(globalAntoraPlaybookContent);
 	}
 
+	static async getGitData(argValues) {
+		let currentRepoName = argValues.repo;
+		let baseBranchName = argValues.branch;
+		if (process.env.NETLIFY) {
+			currentRepoName = process.env.REPOSITORY_URL?.replace('https://github.com/', '');
+			baseBranchName = process.env.PULL_REQUEST ? await PlaybookLoader.getBranchNameFromPrId(currentRepoName) : process.env.BRANCH;
+		}
+
+		// check whether there are arguments after the filename
+		if (!currentRepoName || !baseBranchName) {
+			throw new Error('`repo` and `branch` must be specified!');
+		}
+
+		console.debug('Repository name: ', currentRepoName);
+		console.debug('Base branch: ', baseBranchName);
+
+		return { currentRepoName, baseBranchName };
+	}
+
 	static async loadLocalAntoraData() {
 		const localAntoraPlaybookContent = fs.readFileSync('./antora-playbook.yml', 'utf8');
 		return YAML.parse(localAntoraPlaybookContent);
 	}
 
-	static async fetchBranchName(repoName, prId) {
+	static async getBranchNameFromPrId(repoName) {
+		const prId = process.env.BRANCH?.replace('pull/', '').replace('/head', '');
 		const response = await fetch(`https://api.github.com/repos/${repoName}/pulls/${prId}`);
 		const prData = await response.json();
 		return prData.base.ref;
@@ -187,11 +208,7 @@ class PlaybookLoader {
 			},
 		});
 
-		const netlifyRepositoryName = process.env.REPOSITORY_URL?.replace('https://github.com/', '');
-		const netlifyPrId = process.env.BRANCH?.replace('pull/', '').replace('/head', '');
-
-		const currentRepoName = netlifyRepositoryName || argValues.repo;
-		const baseBranchName = netlifyPrId ? await PlaybookLoader.fetchBranchName(currentRepoName, netlifyPrId) : argValues.branch;
+		const { currentRepoName, baseBranchName } = PlaybookLoader.getGitData(argValues);
 		const logLevel = argValues['log-level'];
 		const skipPrivateRepos = argValues['skip-private-repos'];
 		const enforceGlobalSources = argValues['enforce-global-sources'];
@@ -199,14 +216,6 @@ class PlaybookLoader {
 		if (logLevel !== 'debug') {
 			global.console.debug = () => null;
 		}
-
-		// check whether there are arguments after the filename
-		if (!currentRepoName || !baseBranchName) {
-			throw new Error('`repo` and `branch` must be specified!');
-		}
-
-		console.debug('Repository name: ', currentRepoName);
-		console.debug('Base branch: ', baseBranchName);
 
 		this.currentRepoName = currentRepoName;
 		this.baseBranchName = baseBranchName;
