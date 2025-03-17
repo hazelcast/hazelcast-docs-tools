@@ -45,14 +45,14 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 ```
 
 ## Tools
-| File                                | Type              | Description                                                                                                                                                                                   | 
-|-------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `load-check-links-playbook.js`      | executable/script | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation |
-| `orphan-pages-checker.js`           | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation.                                                                                |
-| `tabs-block.js`                     | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                               |
-| `swagger-ui-block-macro.js`         | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                         |
-| `api-json.js`                       | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                 |
-| `antora-link-checker-extension.js`  | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                  |
+| File                               | Type              | Description                                                                                                                                                                                   | 
+|------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `load-global-playbook.js`          | executable/script | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation |
+| `orphan-pages-checker.js`          | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation.                                                                                |
+| `tabs-block.js`                    | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                               |
+| `swagger-ui-block-macro.js`        | macros            | Adds support for `swagger_ui::{LINK_TO_SWAGGER_YAML}`                                                                                                                                         |
+| `api-json.js`                      | extension         | Adds possibility to get docs or other data as JSON response via HTTP requests                                                                                                                 |
+| `antora-link-checker-extension.js` | extension         | Stops Antora builder earlier to save time for validation run                                                                                                                                  |
 
 ### Orphan Checker
 The `check-orphan-pages` command takes the following arguments
@@ -62,8 +62,8 @@ The `check-orphan-pages` command takes the following arguments
 | `--directory`, `-d`   | set the root folder of documentation, if there are several root directories, can take a coma separated list, e.g. `-d docs,tutorials` | `"docs"`      |
 | `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected                                                               | `undefined`   |
 
-### Check Links Playbook Loader
-The `load-check-links-playbook` command takes the following arguments
+### Global Playbook Loader
+The `load-global-playbook` command takes the following arguments
 
 | Name              | Description                 | Default Value |
 |-------------------|-----------------------------|---------------|
