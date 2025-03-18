@@ -8,6 +8,14 @@ class DocsUIPlaybookLoader {
 			type: 'string',
 			default: './build/ui-bundle.zip',
 		},
+		'skip-private-repos': {
+			type: 'boolean',
+			default: false
+		},
+		'skip-redirects-download': {
+			type: 'boolean',
+			default: false
+		},
 		'log-level': {
 			type: 'string',
 			default: 'log', // 'log' | 'debug'
@@ -22,10 +30,18 @@ class DocsUIPlaybookLoader {
 		PlaybookLoaderUtils.setLogLevel(logLevel);
 
 		const localAntoraPlaybook = { ui: { bundle: { url: argValues['bundle-path'] } } };
+		const skipPrivateRepos = argValues['skip-private-repos'];
+		const skipRedirectsDownload = argValues['skip-redirects-download'];
 		const globalAntoraPlaybook = await PlaybookLoaderUtils.fetchGlobalAntoraPlaybook();
-		const contentSources = PlaybookLoaderUtils.replaceCurrentRepoWithHazelcastDocsUrl(globalAntoraPlaybook.content.sources);
+		let contentSources = PlaybookLoaderUtils.replaceCurrentRepoWithHazelcastDocsUrl(globalAntoraPlaybook.content.sources);
+		if (skipPrivateRepos) {
+			contentSources = PlaybookLoaderUtils.removeProtectedSources(contentSources);
+		}
 		const playbook = PlaybookLoaderUtils.mergePlaybooks(globalAntoraPlaybook, localAntoraPlaybook, contentSources);
 		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
+		if (!skipRedirectsDownload) {
+			await PlaybookLoaderUtils.downloadGlobalRedirects();
+		}
 	}
 }
 
