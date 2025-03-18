@@ -10,6 +10,17 @@ class PlaybookLoaderUtils {
 		return YAML.parse(globalAntoraPlaybookContent);
 	}
 
+	static async downloadGlobalRedirects(path = '_redirects') {
+		const response = await fetch('https://api.github.com/repos/hazelcast/hazelcast-docs/contents/_redirects');
+		const redirects = await response.json();
+		const redirectsContent = Buffer.from(redirects.content, 'base64').toString('utf-8');
+		fs.writeFileSync(
+			path,
+			redirectsContent,
+			{ encoding: 'utf8' },
+		);
+	}
+
 	static setLogLevel(logLevel) {
 		if (logLevel !== 'debug') {
 			global.console.debug = () => null;
