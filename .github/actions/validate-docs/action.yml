@@ -1,0 +1,69 @@
+name: Validate Docs
+description: Validate Docs
+
+inputs:
+  orphan-checker-directory:
+    description: Directory parameter (--directory) for check-orphan-pages
+    required: false
+    default: docs
+  orphan-checker-log-failure-level:
+    description: Failure level parameter (--log-failure-level) for check-orphan-pages
+    required: false
+    default: log
+  check-links-loader-log-level:
+    description: Log level parameter (--log-level) for load-global-playbook
+    required: false
+    default: log
+  repository-name:
+    description: Repository name used by load-global-playbook
+    required: false
+    default: ${{ github.repository }}
+  base-branch-name:
+    description: Branch name used by load-global-playbook
+    required: false
+    default: ${{ github.base_ref }}
+  slack-webhook-url:
+    description: Secret for a Slack webhook to show failed notifications
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'npm'
+
+    - name: Checkout global antora-playbook
+      uses: actions/checkout@v4
+      with:
+        repository: hazelcast/hazelcast-docs
+        sparse-checkout: |
+          antora-playbook.yml
+        sparse-checkout-cone-mode: false
+        path: hazelcast-docs
+        ref: main
+
+    - name: Check for broken internal links
+      shell: bash
+      run: |
+        npm i
+        npm i -D hazelcast/hazelcast-docs-tools#v2.1.0
+        ./node_modules/.bin/load-global-playbook -r ${{ inputs.repository-name }} -b ${{ inputs.base-branch-name }} --log-level ${{ inputs.check-links-loader-log-level }} --skip-private-repos --enforce-global-sources
+        ./node_modules/.bin/antora --fetch --to-dir test --log-level=warn --log-failure-level=warn --extension=./node_modules/hazelcast-docs-tools/antora-extensions/antora-link-checker-extension.js global-antora-playbook.yml
+
+    - name: Check orphan pages
+      shell: bash
+      run: ./node_modules/.bin/check-orphan-pages -d ${{ inputs.orphan-checker-directory }} --log-failure-level ${{ inputs.orphan-checker-log-failure-level }}
+
+    - name: Slack notification
+      uses: 8398a7/action-slack@v3
+      if: failure() && inputs.slack-webhook-url != ''
+      with:
+       status: failure
+       fields: repo,job,workflow
+       text: "👎 Validate docs failed - ⛓️‍💥 broken internal links or ASCIIDOC syntax errors found ⛓️‍💥."
+       channel: "#docs-notifications"
+      env:
+       SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
