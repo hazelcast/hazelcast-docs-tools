@@ -20,6 +20,10 @@ class PlaybookLoader {
 			type: 'boolean',
 			default: false
 		},
+		'skip-redirects-download': {
+			type: 'boolean',
+			default: false
+		},
 		// use only global content sources even if local content sources are present
 		// e.g. for links-checker we should always check in the context of global sources
 		'enforce-global-sources': {
@@ -55,12 +59,16 @@ class PlaybookLoader {
 	}
 
 	async loadPlaybook() {
-		const { skipPrivateRepos } = await this.parseInputArgs();
+		const { skipPrivateRepos, skipRedirectsDownload } = await this.parseInputArgs();
+
 		const localAntoraPlaybook = await PlaybookLoaderUtils.loadLocalAntoraData();
 		const globalAntoraPlaybook = await PlaybookLoaderUtils.fetchGlobalAntoraPlaybook();
 		let { contentSources } = this.loadContentSources(globalAntoraPlaybook, localAntoraPlaybook, skipPrivateRepos);
 		const playbook = PlaybookLoaderUtils.mergePlaybooks(globalAntoraPlaybook, localAntoraPlaybook, contentSources);
 		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
+		if (!skipRedirectsDownload) {
+			await PlaybookLoaderUtils.downloadGlobalRedirects();
+		}
 	}
 
 	async parseInputArgs() {
@@ -71,6 +79,7 @@ class PlaybookLoader {
 		const { currentRepoName, baseBranchName } = await PlaybookLoader.getGitData(argValues);
 		const skipPrivateRepos = argValues['skip-private-repos'];
 		const enforceGlobalSources = argValues['enforce-global-sources'];
+		const skipRedirectsDownload = argValues['skip-redirects-download'];
 
 		const logLevel = argValues['log-level'];
 		PlaybookLoaderUtils.setLogLevel(logLevel);
@@ -80,7 +89,7 @@ class PlaybookLoader {
 		this.logLevel = logLevel;
 		this.skipPrivateRepos = skipPrivateRepos;
 		this.enforceGlobalSources = enforceGlobalSources;
-		return { currentRepoName, baseBranchName, logLevel, skipPrivateRepos, enforceGlobalSources };
+		return { currentRepoName, baseBranchName, logLevel, skipPrivateRepos, enforceGlobalSources, skipRedirectsDownload };
 	}
 
 	loadContentSources(globalAntoraPlaybook, localAntoraPlaybook, skipPrivateRepos) {
