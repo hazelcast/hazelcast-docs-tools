@@ -23,7 +23,7 @@
     "load-docs-ui-playbook": "bin/load-docs-ui-playbook.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-macro": "node test/convert.js"
   },
   "repository": {
     "type": "git",
@@ -45,5 +45,8 @@
   "dependencies": {
     "matcher": "^3.0.0",
     "yaml": "^2.6.0"
+  },
+  "devDependencies": {
+    "asciidoctor": "^3.0.4"
   }
 }

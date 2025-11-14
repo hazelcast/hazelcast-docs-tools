@@ -7,11 +7,16 @@
  */
 
 const buildSwaggerUi = ({ specUrl }) => `
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
-<redoc spec-url='${specUrl}'></redoc>
-<script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"> </script>`
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+	<redoc
+	 spec-url='${specUrl}'
+	 disable-search="true"
+	<!-- more config options https://redocly.com/docs/redoc/config -->
+	></redoc>
+	<script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"> </script>
+`
 
-function blockSwaggerUiMacro ({ file }) {
+function blockSwaggerUiMacro () {
   return function () {
     this.process((parent, specUrl) => {
       specUrl = `${specUrl}`
@@ -21,8 +26,8 @@ function blockSwaggerUiMacro ({ file }) {
   }
 }
 
-function register (registry, context) {
-  registry.blockMacro('swagger_ui', blockSwaggerUiMacro(context))
+function register (registry) {
+  registry.blockMacro('swagger_ui', blockSwaggerUiMacro())
 }
 
 module.exports.register = register

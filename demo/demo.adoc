@@ -1,0 +1,6 @@
+[home_card,title="Clients and APIs",icon="layers"]
+====
+* https://docs.asciidoctor.org/asciidoc/latest/blocks/[Blocks]
+* https://docs.asciidoctor.org/asciidoc/latest/blocks/delimited/[Delimited blocks]
+* https://docs.asciidoctor.org/asciidoc/latest/macros/url-macro/[URL macro]
+====
