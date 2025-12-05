@@ -79,4 +79,4 @@ The release process is powered by [`npm` CLI](https://docs.npmjs.com/updating-yo
 3. Run `git push --follow-tags`.
 4. Go to [releases](https://github.com/hazelcast/hazelcast-docs-tools/releases/new) and create a new release with the latest tag (appeared after step 2). Don't forget to check "Set as the latest release".
 
-To use that release clients need to reinstall the package with the new version, e.g. for the version `v1.2.3` run `npm i -D hazelcast/hazelcast-docs-tools#v1.2.3`
+To use that release clients need to reinstall the package with the new version, e.g. for the version `v2.2.1` run `npm i github:hazelcast/hazelcast-docs-tools#semver:2.2.1`
