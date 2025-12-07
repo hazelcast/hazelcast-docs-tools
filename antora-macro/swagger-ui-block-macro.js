@@ -7,9 +7,28 @@
  */
 
 const buildSwaggerUi = ({ specUrl }) => `
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
-<redoc spec-url='${specUrl}'></redoc>
-<script src="https://cdn.redoc.ly/redoc/v2.1.4/bundles/redoc.standalone.js"> </script>`
+<redoc
+      spec-url='${specUrl}'
+      scroll-y-offset="60"
+      theme='{
+         "spacing": {
+           "sectionVertical": "20"
+         },
+         "typography": {
+           "fontFamily": "Open Sans",
+           "headings": {
+             "fontFamily": "PP Telegraf"
+           },
+           "code": {
+             "fontFamily": "Roboto Mono"
+           }
+         },
+         "rightPanel": {
+           "backgroundColor": "#191d29"
+         }
+       }'
+    ></redoc>
+    <script src="https://cdn.redoc.ly/redoc/v2.1.4/bundles/redoc.standalone.js"></script>`
 
 function blockSwaggerUiMacro ({ file }) {
   return function () {
