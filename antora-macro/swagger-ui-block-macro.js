@@ -125,7 +125,17 @@ function handleGitHubUrl(file, specUrl) {
 
   if (!yamlContent) {
     try {
-      const githubToken = process.env.GITHUB_TOKEN
+      let githubToken = process.env.GITHUB_TOKEN
+
+      if (!githubToken) {
+        githubToken = process.env.GIT_CREDENTIALS && new URL(process.env.GIT_CREDENTIALS).username
+      }
+
+      if (!githubToken) {
+        throw new Error(`GitHub token is required for fetching from GitHub.
+        It can be set via GITHUB_TOKEN environment variable as a bare token 
+        or GIT_CREDENTIALS environment variable as URL with username and password, where username is token.`)
+      }
 
       console.log(`[swagger_ui] Fetching from GitHub API...`)
       yamlContent = fetchFromGitHubSync(specUrl, githubToken)
