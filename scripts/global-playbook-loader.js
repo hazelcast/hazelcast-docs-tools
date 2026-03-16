@@ -65,10 +65,7 @@ class PlaybookLoader {
 		const globalAntoraPlaybook = await PlaybookLoaderUtils.fetchGlobalAntoraPlaybook();
 		let { contentSources } = this.loadContentSources(globalAntoraPlaybook, localAntoraPlaybook, skipPrivateRepos);
 		const playbook = PlaybookLoaderUtils.mergePlaybooks(globalAntoraPlaybook, localAntoraPlaybook, contentSources);
-		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
-		if (!skipRedirectsDownload) {
-			await PlaybookLoaderUtils.downloadGlobalRedirects();
-		}
+		await PlaybookLoaderUtils.writeGlobalAssets(playbook, skipRedirectsDownload);
 	}
 
 	async parseInputArgs() {
