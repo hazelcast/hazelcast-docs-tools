@@ -10,34 +10,15 @@ class PlaybookLoaderUtils {
 		return YAML.parse(globalAntoraPlaybookContent);
 	}
 
-	static async downloadGlobalRedirects(filename = '_redirects') {
-		const response = await fetch(`https://api.github.com/repos/hazelcast/hazelcast-docs/contents/${filename}`);
+	static async downloadGlobalRedirects(path = '_redirects') {
+		const response = await fetch('https://api.github.com/repos/hazelcast/hazelcast-docs/contents/_redirects');
 		const redirects = await response.json();
-		const content = Buffer.from(redirects.content, 'base64').toString('utf-8');
+		const redirectsContent = Buffer.from(redirects.content, 'base64').toString('utf-8');
 		fs.writeFileSync(
-			filename,
-			content,
+			path,
+			redirectsContent,
 			{ encoding: 'utf8' },
 		);
-	}
-
-	static async downloadGlobalNodeJSConfig(filename = '.nvmrc') {
-		const response = await fetch(`https://api.github.com/repos/hazelcast/hazelcast-docs/contents/${filename}`);
-		const redirects = await response.json();
-		const content = Buffer.from(redirects.content, 'base64').toString('utf-8');
-		fs.writeFileSync(
-			filename,
-			content,
-			{ encoding: 'utf8' },
-		);
-	}
-
-	static async writeGlobalAssets(playbook, skipRedirectsDownload) {
-		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
-		if (!skipRedirectsDownload) {
-			await PlaybookLoaderUtils.downloadGlobalRedirects();
-		}
-		await PlaybookLoaderUtils.downloadGlobalNodeJSConfig();
 	}
 
 	static setLogLevel(logLevel) {
