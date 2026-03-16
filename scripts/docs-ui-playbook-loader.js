@@ -38,10 +38,7 @@ class DocsUIPlaybookLoader {
 			contentSources = PlaybookLoaderUtils.removeProtectedSources(contentSources);
 		}
 		const playbook = PlaybookLoaderUtils.mergePlaybooks(globalAntoraPlaybook, localAntoraPlaybook, contentSources);
-		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
-		if (!skipRedirectsDownload) {
-			await PlaybookLoaderUtils.downloadGlobalRedirects();
-		}
+		await PlaybookLoaderUtils.writeGlobalAssets(playbook, skipRedirectsDownload);
 	}
 }
 
