@@ -35,8 +35,6 @@ function fetchFromGitHubSync(githubUrl, token) {
   try {
     const apiUrl = convertToGitHubApiUrl(githubUrl)
 
-    console.log(`[swagger_ui] API URL: ${apiUrl}`)
-
     // Use curl to fetch from GitHub API synchronously
     const curlCmd = `curl -s -H "Accept: application/vnd.github.v3+json" -H "User-Agent: Hazelcast-Docs-Builder" -H "Authorization: Bearer ${token}" "${apiUrl}"`
 
@@ -85,8 +83,6 @@ function writeYamlToOutput(file, githubUrl, yamlContent) {
     fs.mkdirSync(outputDir, {recursive: true})
 
     fs.writeFileSync(outputPath, yamlContent, 'utf8')
-
-    console.log(`[swagger_ui] Wrote file to: ${outputPath}`)
 
     const versionPath = (!version || version === '~') ? '' : `/${version}`
     return `/${component}${versionPath}/${SWAGGER_ATTACHMENTS_FOLDER}/${filename}`
@@ -137,13 +133,11 @@ function handleGitHubUrl(file, specUrl) {
         or GIT_CREDENTIALS environment variable as URL with username and password, where username is token.`)
       }
 
-      console.log(`[swagger_ui] Fetching from GitHub API...`)
       yamlContent = fetchFromGitHubSync(specUrl, githubToken)
 
       githubCache.set(specUrl, yamlContent)
-      console.log(`[swagger_ui] ✓ Fetched ${yamlContent.length} bytes`)
     } catch (error) {
-      console.error(`[swagger_ui] Failed to fetch ${specUrl}: ${error.message}`)
+      console.error(`[SWAGGER_UI] Failed to fetch ${specUrl}: ${error.message}`)
     }
   }
 
@@ -151,7 +145,6 @@ function handleGitHubUrl(file, specUrl) {
   if (yamlContent) {
     const localUrl = writeYamlToOutput(file, specUrl, yamlContent)
     if (localUrl) {
-      console.log(`[swagger_ui] Using local URL: ${localUrl}`)
       specUrl = localUrl
     }
   }
@@ -163,7 +156,6 @@ function blockSwaggerUiMacro({file}) {
   return function () {
     this.process((parent, specUrl) => {
       if (specUrl.startsWith('https://github.com/hazelcast')) {
-        console.log(`[swagger_ui] Detected GitHub URL: ${specUrl}`)
         specUrl = handleGitHubUrl(file, specUrl);
       }
 
