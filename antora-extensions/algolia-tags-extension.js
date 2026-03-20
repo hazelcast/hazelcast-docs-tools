@@ -87,10 +87,8 @@ module.exports.register = function () {
   this.on('contentClassified', async ({ contentCatalog, uiCatalog }) => {
     const tags = await tagsPromise
 
-    // Get component names from the content catalog, sorted longest-first so that
-    // multi-word names like "management-center" match before shorter ones.
+    // Get component names from the content catalog.
     const componentNames = contentCatalog.getComponents().map((c) => c.name)
-    componentNames.sort((a, b) => b.length - a.length)
 
     // Build a lookup of version → url from the content catalog
     const catalogVersionUrls = {}
@@ -102,12 +100,11 @@ module.exports.register = function () {
     }
 
     // Build component → sorted version objects: { version, url }
-    // url is null for Algolia-only versions not present in the current build.
     const versionsMap = Object.fromEntries(componentNames.map((name) => [name, []]))
     for (const tag of tags) {
       for (const name of componentNames) {
-        if (tag.startsWith(name + '-')) {
-          versionsMap[name].push(tag.slice(name.length + 1))
+        if (tag.startsWith(name)) {
+          versionsMap[name].push(tag.replace(`${name}-`))
           break
         }
       }
@@ -117,7 +114,7 @@ module.exports.register = function () {
       sortVersions(versionsMap[name])
       versionsMap[name] = versionsMap[name].map((version) => ({
         version,
-        url: catalogVersionUrls[name]?.[version] || null,
+        url: catalogVersionUrls[name]?.[version],
       }))
     }
 
