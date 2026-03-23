@@ -63,6 +63,7 @@ class PlaybookLoader {
 
 		const localAntoraPlaybook = await PlaybookLoaderUtils.loadLocalAntoraData();
 		const globalAntoraPlaybook = await PlaybookLoaderUtils.fetchGlobalAntoraPlaybook();
+		PlaybookLoaderUtils.selfHealDocsTools(globalAntoraPlaybook);
 		let { contentSources } = this.loadContentSources(globalAntoraPlaybook, localAntoraPlaybook, skipPrivateRepos);
 		const playbook = PlaybookLoaderUtils.mergePlaybooks(globalAntoraPlaybook, localAntoraPlaybook, contentSources);
 		PlaybookLoaderUtils.writeGlobalAntoraPlaybookFile(playbook);
