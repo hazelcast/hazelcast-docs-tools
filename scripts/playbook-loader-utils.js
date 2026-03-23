@@ -1,5 +1,7 @@
 const YAML = require('yaml');
 const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
 const {isMatch} = require('matcher');
 
 class PlaybookLoaderUtils {
@@ -143,6 +145,25 @@ class PlaybookLoaderUtils {
 		} catch (err) {
 			console.debug(err);
 			console.warn('Could not rewrite version. There might be an error with version collision!');
+		}
+	}
+
+	static selfHealDocsTools(playbook) {
+		const allExtensions = [
+			...(playbook.antora?.extensions || []),
+			...(playbook.asciidoc?.extensions || []),
+		];
+		const docsToolsPaths = allExtensions
+			.map(ext => (typeof ext === 'string' ? ext : ext?.require))
+			.filter(req => req?.includes('hazelcast-docs-tools'));
+
+		const missing = docsToolsPaths.filter(
+			p => !fs.existsSync(path.resolve(process.cwd(), p))
+		);
+
+		if (missing.length > 0) {
+			console.log(`hazelcast-docs-tools is outdated (missing: ${missing.map(p => path.basename(p)).join(', ')}). Reinstalling...`);
+			execSync('npm install --no-save github:hazelcast/hazelcast-docs-tools', { stdio: 'inherit', cwd: process.cwd() });
 		}
 	}
 
