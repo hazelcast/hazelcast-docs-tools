@@ -148,25 +148,6 @@ class PlaybookLoaderUtils {
 		}
 	}
 
-	static selfHealDocsTools(playbook) {
-		const allExtensions = [
-			...(playbook.antora?.extensions || []),
-			...(playbook.asciidoc?.extensions || []),
-		];
-		const docsToolsPaths = allExtensions
-			.map(ext => (typeof ext === 'string' ? ext : ext?.require))
-			.filter(req => req?.includes('hazelcast-docs-tools'));
-
-		const missing = docsToolsPaths.filter(
-			p => !fs.existsSync(path.resolve(process.cwd(), p))
-		);
-
-		if (missing.length > 0) {
-			console.log(`hazelcast-docs-tools is outdated (missing: ${missing.map(p => path.basename(p)).join(', ')}). Reinstalling...`);
-			execSync('npm install --no-save github:hazelcast/hazelcast-docs-tools', { stdio: 'inherit', cwd: process.cwd() });
-		}
-	}
-
 	static getCurrentSource(matchedRepos, branchName) {
 		let currentSource = matchedRepos.find(source => {
 			if (Array.isArray(source.branches)) {
