@@ -33,7 +33,6 @@ class DocsUIPlaybookLoader {
 		const skipPrivateRepos = argValues['skip-private-repos'];
 		const skipRedirectsDownload = argValues['skip-redirects-download'];
 		const globalAntoraPlaybook = await PlaybookLoaderUtils.fetchGlobalAntoraPlaybook();
-		PlaybookLoaderUtils.selfHealDocsTools(globalAntoraPlaybook);
 		let contentSources = PlaybookLoaderUtils.replaceCurrentRepoWithHazelcastDocsUrl(globalAntoraPlaybook.content.sources);
 		if (skipPrivateRepos) {
 			contentSources = PlaybookLoaderUtils.removeProtectedSources(contentSources);
