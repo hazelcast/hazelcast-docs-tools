@@ -44,6 +44,6 @@
   "homepage": "https://github.com/hazelcast/hazelcast-docs-tools#readme",
   "dependencies": {
     "matcher": "^3.0.0",
-    "yaml": "^2.6.0"
+    "yaml": "^2.8.3"
   }
 }
