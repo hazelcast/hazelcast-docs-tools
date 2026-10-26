@@ -1,9 +1,12 @@
 ## Description
+
+> This repository is no longer being maintained. The content has been migrated to the new link:https://github.com/hazelcast/documentation[Hazelcast documentation] repository. Find the published documentation at link:https://docs.hazelcast.com[docs.hazelcast.com].
+
 Various tools and helpers to build documentation site
 
 ## Structure
 | Folder            | Description                                                                                    |
-|-------------------|------------------------------------------------------------------------------------------------|
+| ----------------- | ---------------------------------------------------------------------------------------------- |
 | antora-extensions | [extensions](https://docs.antora.org/antora/latest/extend/extensions/) for antora site builder |
 | antora-macro      | [macro](https://docs.antora.org/antora/latest/asciidoc/ui-macros/) for antora site builder     |
 | scripts           | various scripts for file processing                                                            |
@@ -45,8 +48,8 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 ```
 
 ## Tools
-| File                               | Type              | Description                                                                                                                                                                                   | 
-|------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| File                               | Type              | Description                                                                                                                                                                                   |
+| ---------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `load-global-playbook.js`          | executable/script | Creates a special Antora Playbook from the global [`antora-playbook.yml`](https://github.com/hazelcast/hazelcast-docs/blob/main/antora-playbook.yml) suitable for running the docs validation |
 | `orphan-pages-checker.js`          | executable/script | Checks the whether the current docs pages folders contain the pages which are not mentioned in the navigation.                                                                                |
 | `tabs-block.js`                    | macros            | Extends the AsciiDoc syntax to support a tabset                                                                                                                                               |
@@ -58,18 +61,18 @@ Executables are installed inside the `node_modules/.bin`, so they can be called 
 The `check-orphan-pages` command takes the following arguments
 
 | Name                  | Description                                                                                                                           | Default Value |
-|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | `--directory`, `-d`   | set the root folder of documentation, if there are several root directories, can take a coma separated list, e.g. `-d docs,tutorials` | `"docs"`      |
 | `--log-failure-level` | if set to `"error"` exits process with `1` if orphan pages are detected                                                               | `undefined`   |
 
 ### Global Playbook Loader
 The `load-global-playbook` command takes the following arguments
 
-| Name              | Description                 | Default Value |
-|-------------------|-----------------------------|---------------|
-| `--repo`, `-r`    | repository name             |               |
-| `--branch`, `-b`  | branch name                 |               |
-| `--log-level`     | log level: 'log' or 'debug' | 'log'         |
+| Name             | Description                 | Default Value |
+| ---------------- | --------------------------- | ------------- |
+| `--repo`, `-r`   | repository name             |               |
+| `--branch`, `-b` | branch name                 |               |
+| `--log-level`    | log level: 'log' or 'debug' | 'log'         |
 
 ## Release Process
 The release process is powered by [`npm` CLI](https://docs.npmjs.com/updating-your-published-package-version-number).
