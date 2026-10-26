@@ -1,6 +1,6 @@
 ## Description
 
-> This repository is no longer being maintained. The content has been migrated to the new link:https://github.com/hazelcast/documentation[Hazelcast documentation] repository. Find the published documentation at link:https://docs.hazelcast.com[docs.hazelcast.com].
+> This repository is no longer being maintained. The content has been migrated to the new [Hazelcast documentation](https://github.com/hazelcast/documentation) repository. Find the published documentation at [docs.hazelcast.com](https://docs.hazelcast.com).
 
 Various tools and helpers to build documentation site
 
